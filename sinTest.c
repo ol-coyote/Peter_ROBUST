@@ -5,7 +5,8 @@
 #include "sinTest.h"
 #define MAX_ELEM 10000
 #define INCRM 0.036
-#define VERBOSE 1
+#define VERBOSE 0
+#define BT 1
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
 
 int main(void){
@@ -15,18 +16,35 @@ int main(void){
   //initialization of struct pointers                                             
   struct SineInterPolateObj *first = NULL;
   struct SineInterPolateObj *curr = NULL;
+  struct SineInterPolateObj *last = NULL;
+
   for(i=0;i < MAX_ELEM;i++){
-    curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj *));
+    curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj ));
     if (first == NULL){
       first = curr;
       if (VERBOSE) fprintf(stderr,"First element in linked list\n");
     }
-    curr->value = sin(x); // insert sin value into node
-    if (VERBOSE) fprintf(stderr,"value of node: %f\n",curr->value);
+    if (last != NULL){
+      last->next = curr;
+    }
+    curr->value = sin(x); // insert sin value into node for linked list
+    //if (VERBOSE) fprintf(stderr,"value of node: %f\n",curr->value);
     curr->next = NULL; // set next to null
-
-    sinValues[i]=sin(x); // insert values into table
+    last=curr;
+    sinValues[i]=sin(x); // insert values into table array
     x+=INCRM;
+    //if (VERBOSE) printf("value of i: %d\n",i);
+  }
+  if(VERBOSE) fprintf(stderr, "Table array and linked list compilation complete.\n");
+  if(BT){
+    i=0;
+    curr = first;
+    while (curr !=NULL){
+      fprintf(stderr,"Node value: %f i:%d \n",curr->value, i++);
+      last=curr;
+      curr=curr->next;
+      free(last);
+    }
   }
   return 0;
 }
