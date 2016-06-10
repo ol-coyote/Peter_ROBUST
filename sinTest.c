@@ -6,7 +6,7 @@
 #define MAX_ELEM 10000
 #define INCRM 0.036
 #define VERBOSE 0
-#define BT 0
+#define BT 1
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
 
 int main(void){
