@@ -5,10 +5,10 @@
 #include "sinTest.h"
 #define MAX_ELEM 10000
 #define INCRM 0.036
-#define VERBOSE 1
+#define VERBOSE 0
 #define BT 0
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
-void makeTable(void *first, void *curr, void *last, double value);
+
 int main(void){
   double x = 0.0; // Temporary value of x to run through sine function            
   int i;
@@ -17,20 +17,25 @@ int main(void){
   struct SineInterPolateObj *first = NULL;
   struct SineInterPolateObj *curr = NULL;
   struct SineInterPolateObj *last = NULL;
-  void *fptr = &first;
-  void *cptr = &curr;
-  void *lptr = &last;
+
   for(i=0;i < MAX_ELEM;i++){
     // Dynamic allocation of each node
+    curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj)); 
     
-    makeTable(fptr, cptr, lptr, sin(x));
+    if (first == NULL)
+      first = curr;
+    if (last != NULL)
+      last->next = curr;
+
+    curr->value = sin(x); // insert sin value into node for linked list
+    curr->next = NULL; // set next to null
+    last=curr; // set last to current
 
     sinValues[i]=sin(x); // insert values into table array
     x+=INCRM; // increment value of x
   }
 
-  if(VERBOSE){ // code to iterate and test if linked list is compilated correctly. 
-    if (VERBOSE) fprintf(stderr,"TEST LIST");
+  if(BT){ // code to iterate and test if linked list is compilated correctly. 
     i=0;
     curr = first;
     while (curr !=NULL){
@@ -44,22 +49,26 @@ int main(void){
   return 0;
 }
 
-void makeTable(void *first, void *curr, void *last, double value){
-  struct SineInterPolateObj *fptr = (struct SineInterPolateObj *) first;
-  struct SineInterPolateObj *cptr = (struct SineInterPolateObj *) curr;
-  struct SineInterPolateObj *lptr = (struct SineInterPolateObj *) last;
-  curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj)); 
 
-  if (fptr == NULL)
-    fptr = cptr;
-  if (lptr != NULL)
-    lptr->next = cptr;
+void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
+   const double* tt = &table->values; // alias                                     
 
-  cptr->value = value; // insert sin value into node for linked list
-  cptr->next = NULL; // set next to null
-  lptr=cptr; // set last to current
+   if ( r < table->x0 ) r = table->x0;
+
+   r = (r-table->x0)*(table->invDx) ;
+   int ii = (int)floor(r);
+
+   if (ii > table->n) {
+      ii = table->n;
+      r = table->n / table->invDx;
+   }
+
+   r = r - floor(r); // reset r to fractional distance                            
+   double g1 = tt[ii+1] - tt[ii-1];
+
+   double g2 = tt[ii+2] - tt[ii];
+   *f = tt[ii] + 0.5*r*(g1 + r*(tt[ii+1] + tt[ii-1] - 2.0*tt[ii]) );
+   *df = 0.5*(g1 + r*(g2-g1))*table->invDx;
 }
-
-
 
 
