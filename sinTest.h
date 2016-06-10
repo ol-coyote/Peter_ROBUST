@@ -1,20 +1,26 @@
+/* Node for sin table linked list. */
 struct SineInterPolateObj{
   double value;
   struct SineInterPolateObj *next;
 };
 
 
-/// Handles interpolation of tabular data.
-///
-/// \see initInterpolationObject
-/// \see interpolate
+/* 
+Interpolation must be supported on the range
+f$[x_0, x_n]\f$, where \f$x_n = n*dx\f$.
 
+param [in] n    number of values in the table.
+param [in] x0   minimum ordinate value of the table.
+param [in] dx   spacing of the ordinate values. {1.0/dx};
+param [in] data abscissa values.  An array of size n. 
+*/
 struct InterpolationObject{
    int n;          //!< the number of values in the table                         
    double x0;      //!< the starting ordinate range                               
    double invDx;   //!< the inverse of the table spacing                          
-   double *values; //!< the abscissa values                                       
+   double *values; //!< the abscissa values values=                                     
 } ;
+
 
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
    const double* tt = &table->values; // alias                                     
