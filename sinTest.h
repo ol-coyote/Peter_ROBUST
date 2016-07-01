@@ -21,7 +21,7 @@ struct InterpolationObject{
    double *values; //!< the abscissa values values=                                     
 } ;
 
-
+/*
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
    const double* tt = &table->values; // alias                                     
 
@@ -42,3 +42,4 @@ void interpolate(struct InterpolationObject* table, double r, double* f, double*
    *f = tt[ii] + 0.5*r*(g1 + r*(tt[ii+1] + tt[ii-1] - 2.0*tt[ii]) );
    *df = 0.5*(g1 + r*(g2-g1))*table->invDx;
 }
+*/

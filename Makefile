@@ -5,10 +5,18 @@ CC=gcc
 OBJ_S=sinTest
 DEPS=sinTest.h
 S_SRC=sinTest.c
+#CC=gcc
+#OBJ_S=pitest
+#DEPS=sinTest.h
+#S_SRC=pitest.c
+
 OBJ=-o
 MATH=-lm
 
 all: $(OBJ_S)
+#$(OBJ_S): $(S_SRC)
+#	$(CC) $(OBJ) $(OBJ_S) $(S_SRC) $(MATH)
+
 $(OBJ_S): $(S_SRC) $(DEPS)
 	$(CC) $(OBJ) $(OBJ_S) $(S_SRC) $(MATH)
 clean:

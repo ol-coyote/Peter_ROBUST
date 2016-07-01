@@ -5,12 +5,14 @@
 #include "sinTest.h"
 #define MAX_ELEM 10000
 #define INCRM 0.036
-#define VERBOSE 0
-#define BT 1
+#define VERBOSE 1
+#define BT 0
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
 
 int main(void){
-  double x = 0.0; // Temporary value of x to run through sine function            
+  double x = 0.0; // Temporary value of x to run through sine function        
+  double incr = (1.0/MAX_ELEM);    
+  printf("incr: %f\n", incr);
   int i;
   double sinValues [MAX_ELEM];
   //initialization of struct pointers                                             
@@ -18,8 +20,10 @@ int main(void){
   struct SineInterPolateObj *curr = NULL;
   struct SineInterPolateObj *last = NULL;
 
-  for(i=0;i < MAX_ELEM;i++){
+  for(i=-1;x <= 1;i++){
     // Dynamic allocation of each node
+    printf("x: %f\n",x);
+    if (VERBOSE) fprintf(stderr,"Value of sin(x*PI): %f i: %d\n",sin(x * M_PI),i);
     curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj)); 
     
     if (first == NULL)
@@ -27,29 +31,29 @@ int main(void){
     if (last != NULL)
       last->next = curr;
 
-    curr->value = sin(x); // insert sin value into node for linked list
+    curr->value = sin(x * M_PI); // insert sin value into node for linked list
     curr->next = NULL; // set next to null
     last=curr; // set last to current
 
     sinValues[i]=sin(x); // insert values into table array
-    x+=INCRM; // increment value of x
+    x+=incr; // increment value of x
   }
 
   if(BT){ // code to iterate and test if linked list is compilated correctly. 
     i=0;
     curr = first;
     while (curr !=NULL){
-      if (VERBOSE) fprintf(stderr,"Node value: %f i:%d \n",curr->value, i++);
+      if (BT) fprintf(stderr,"Node value: %f i:%d \n",curr->value, i++);
       last=curr;
       curr=curr->next;
       free(last);
-      if (VERBOSE) fprintf(stderr,"last free'd\n");
+      if (BT) fprintf(stderr,"last free'd\n");
     }
   }
   return 0;
 }
 
-
+/*
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
    const double* tt = &table->values; // alias                                     
 
@@ -70,5 +74,5 @@ void interpolate(struct InterpolationObject* table, double r, double* f, double*
    *f = tt[ii] + 0.5*r*(g1 + r*(tt[ii+1] + tt[ii-1] - 2.0*tt[ii]) );
    *df = 0.5*(g1 + r*(g2-g1))*table->invDx;
 }
-
+*/
 
