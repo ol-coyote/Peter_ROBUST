@@ -5,13 +5,14 @@
 #include "sinTest.h"
 #define MAX_ELEM 10000
 #define INCRM 0.036
-#define VERBOSE 1
+#define VERBOSE 0
 #define BT 0
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
 
 int main(void){
   double x = 0.0; // Temporary value of x to run through sine function        
-  double incr = (1.0/MAX_ELEM);    
+  double incr = (1.0/MAX_ELEM);
+  x+=incr;    
   printf("incr: %f\n", incr);
   int i;
   double sinValues [MAX_ELEM];
@@ -20,10 +21,10 @@ int main(void){
   struct SineInterPolateObj *curr = NULL;
   struct SineInterPolateObj *last = NULL;
 
-  for(i=-1;x <= 1;i++){
+  for(i=1;i < MAX_ELEM && x < 1.0;i++){
     // Dynamic allocation of each node
     printf("x: %f\n",x);
-    if (VERBOSE) fprintf(stderr,"Value of sin(x*PI): %f i: %d\n",sin(x * M_PI),i);
+    if (VERBOSE) fprintf(stderr,"Value of COS(x*PI): %f i: %d\n",sin(x * M_PI),i);
     curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj)); 
     
     if (first == NULL)
