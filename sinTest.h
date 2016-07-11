@@ -11,7 +11,6 @@ struct SineInterPolateObj{
   struct SineInterPolateObj *next;
 };
 
-
 /* 
 Interpolation must be supported on the range
 f$[x_0, x_n]\f$, where \f$x_n = n*dx\f$.

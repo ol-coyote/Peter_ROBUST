@@ -4,10 +4,7 @@
 #include <stdio.h>
 #include "sinTest.h"
 #include <time.h>
-#define MAX_ELEM 10000
-#define INCRM 0.036
-#define VERBOSE 0
-#define BT 1
+
 #define BIL 1E9
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
 //void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr, struct SineInterPolateObj *last, double *sinValues);
