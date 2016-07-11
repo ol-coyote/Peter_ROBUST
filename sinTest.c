@@ -4,15 +4,14 @@
 #include <stdio.h>
 #include "sinTest.h"
 #include <time.h>
-
 #define BIL 1E9
-void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
-//void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr, struct SineInterPolateObj *last, double *sinValues);
+
+
 int main(void){
 
   double x = 0.0; // Temporary value of x to run through sine function        
   double incr = (1.0/MAX_ELEM);
-  //  printf("incr: %f\n", incr);
+  
   int i;
   double sinValues [MAX_ELEM];
   double totalTime;
