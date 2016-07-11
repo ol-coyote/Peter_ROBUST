@@ -2,8 +2,8 @@
 #define SINTEST_H
 #define MAX_ELEM 10000
 #define INCRM 0.036
-#define VERBOSE 0
-#define BT 1
+#define VERBOSE 1
+#define BT 0
 
 /* Node for sin table linked list. */
 struct SineInterPolateObj{
@@ -37,10 +37,10 @@ void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr
   double incr = (1.0/MAX_ELEM);
   x+=incr;
   
-  for(i=0;x <= 1;i++){
+  for(i=0;x < 1;i++){
     // Dynamic allocation of each node
     if (BT) printf("x: %f\n",x);
-    if (VERBOSE) fprintf(stderr,"Value of cos(x*PI): %f i: %d\n",cos(x * M_PI),i);
+    if (VERBOSE) fprintf(stderr,"X: %f Value of cos(x*PI): %f i: %d\n",x,cos(x * M_PI),i);
     curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj));
     
     if (first == NULL)

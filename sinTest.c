@@ -8,10 +8,6 @@
 
 
 int main(void){
-
-  double x = 0.0; // Temporary value of x to run through sine function        
-  double incr = (1.0/MAX_ELEM);
-  
   int i;
   double sinValues [MAX_ELEM];
   double totalTime;
@@ -22,10 +18,17 @@ int main(void){
   struct timespec start, stop;
 
   clock_gettime(CLOCK_REALTIME, &start);
+  
   setCOSINE(first, curr, last, sinValues);
   clock_gettime(CLOCK_REALTIME, &stop);
   totalTime = ((stop.tv_sec - start.tv_sec) + (stop.tv_nsec - start.tv_nsec)) / BIL;
-  fprintf(stderr, "time: %lf",totalTime);
+  printf("\n");
+  fprintf(stderr, "Start time: %lf\n",start);
+  printf("\n");
+  fprintf(stderr, "Total time: %lf\n",totalTime);
+  printf("\n");
+  fprintf(stderr, "Start time: %lf\n",stop);
+  printf("\n");
 
   if(BT){ // code to iterate and test if linked list is compilated correctly. 
     i=0;
