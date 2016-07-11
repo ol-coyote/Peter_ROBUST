@@ -3,41 +3,33 @@
 #include <math.h>
 #include <stdio.h>
 #include "sinTest.h"
+#include <time.h>
 #define MAX_ELEM 10000
 #define INCRM 0.036
-#define VERBOSE 1
-#define BT 0
+#define VERBOSE 0
+#define BT 1
+#define BIL 1E9
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df);
-
+//void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr, struct SineInterPolateObj *last, double *sinValues);
 int main(void){
+
   double x = 0.0; // Temporary value of x to run through sine function        
-  double incr = (1.0/MAX_ELEM);    
-  printf("incr: %f\n", incr);
+  double incr = (1.0/MAX_ELEM);
+  //  printf("incr: %f\n", incr);
   int i;
   double sinValues [MAX_ELEM];
+  double totalTime;
   //initialization of struct pointers                                             
   struct SineInterPolateObj *first = NULL;
   struct SineInterPolateObj *curr = NULL;
   struct SineInterPolateObj *last = NULL;
+  struct timespec start, stop;
 
-  for(i=-1;x <= 1;i++){
-    // Dynamic allocation of each node
-    printf("x: %f\n",x);
-    if (VERBOSE) fprintf(stderr,"Value of sin(x*PI): %f i: %d\n",sin(x * M_PI),i);
-    curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj)); 
-    
-    if (first == NULL)
-      first = curr;
-    if (last != NULL)
-      last->next = curr;
-
-    curr->value = sin(x * M_PI); // insert sin value into node for linked list
-    curr->next = NULL; // set next to null
-    last=curr; // set last to current
-
-    sinValues[i]=sin(x); // insert values into table array
-    x+=incr; // increment value of x
-  }
+  clock_gettime(CLOCK_REALTIME, &start);
+  setCOSINE(first, curr, last, sinValues);
+  clock_gettime(CLOCK_REALTIME, &stop);
+  totalTime = ((stop.tv_sec - start.tv_sec) + (stop.tv_nsec - start.tv_nsec)) / BIL;
+  fprintf(stderr, "time: %lf",totalTime);
 
   if(BT){ // code to iterate and test if linked list is compilated correctly. 
     i=0;
@@ -50,10 +42,38 @@ int main(void){
       if (BT) fprintf(stderr,"last free'd\n");
     }
   }
+  
   return 0;
 }
-
 /*
+void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr, struct SineInterPolateObj *last, double *sinValues){
+
+  int i;
+  double x = 0.0; // Temporary value of x to run through sine function        
+  double incr = (1.0/MAX_ELEM);
+  
+  for(i=0;x <= 1;i++){
+    // Dynamic allocation of each node
+    if (BT) printf("x: %f\n",x);
+    if (VERBOSE) fprintf(stderr,"Value of cos(x*PI): %f i: %d\n",cos(x * M_PI),i);
+    curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj));
+    
+    if (first == NULL)
+      first = curr;
+    if (last != NULL)
+      last->next = curr;
+
+    curr->value = cos(x * M_PI); // insert sin value into node for linked list
+    curr->next = NULL; // set next to null
+    last=curr; // set last to current
+
+    sinValues[i]=cos(x * M_PI); // insert values into table array
+    x+=incr; // increment value of x
+  }
+  
+}
+
+
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
    const double* tt = &table->values; // alias                                     
 

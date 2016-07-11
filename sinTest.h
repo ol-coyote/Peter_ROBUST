@@ -1,3 +1,10 @@
+#ifndef SINTEST_H
+#define SINTEST_H
+#define MAX_ELEM 10000
+#define INCRM 0.036
+#define VERBOSE 0
+#define BT 1
+
 /* Node for sin table linked list. */
 struct SineInterPolateObj{
   double value;
@@ -21,6 +28,34 @@ struct InterpolationObject{
    double *values; //!< the abscissa values values=                                     
 } ;
 
+
+
+void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr, struct SineInterPolateObj *last, double *sinValues){
+
+  int i;
+  double x = 0.0; // Temporary value of x to run through sine function        
+  double incr = (1.0/MAX_ELEM);
+  
+  for(i=0;x <= 1;i++){
+    // Dynamic allocation of each node
+    if (BT) printf("x: %f\n",x);
+    if (VERBOSE) fprintf(stderr,"Value of cos(x*PI): %f i: %d\n",cos(x * M_PI),i);
+    curr = (struct SineInterPolateObj *) malloc(sizeof(struct SineInterPolateObj));
+    
+    if (first == NULL)
+      first = curr;
+    if (last != NULL)
+      last->next = curr;
+
+    curr->value = cos(x * M_PI); // insert sin value into node for linked list
+    curr->next = NULL; // set next to null
+    last=curr; // set last to current
+
+    sinValues[i]=cos(x * M_PI); // insert values into table array
+    x+=incr; // increment value of x
+  }
+  
+}
 /*
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
    const double* tt = &table->values; // alias                                     
@@ -43,3 +78,4 @@ void interpolate(struct InterpolationObject* table, double r, double* f, double*
    *df = 0.5*(g1 + r*(g2-g1))*table->invDx;
 }
 */
+#endif
