@@ -33,8 +33,8 @@ struct InterpolationObject{
 void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr, struct SineInterPolateObj *last, double *sinValues){
 
   int i;
-  double x = 0.0; // Temporary value of x to run through sine function        
-  double incr = (1.0/MAX_ELEM);
+  double x = -1.0; // Temporary value of x to run through sine function        
+  double incr = (2.0/MAX_ELEM);
   x+=incr;
   
   for(i=0;x < 1;i++){
@@ -57,9 +57,10 @@ void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr
   }
   
 }
-/*
+
+
 void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
-   const double* tt = &table->values; // alias                                     
+   const double* tt = table->values; // alias                                     
 
    if ( r < table->x0 ) r = table->x0;
 
@@ -78,5 +79,4 @@ void interpolate(struct InterpolationObject* table, double r, double* f, double*
    *f = tt[ii] + 0.5*r*(g1 + r*(tt[ii+1] + tt[ii-1] - 2.0*tt[ii]) );
    *df = 0.5*(g1 + r*(g2-g1))*table->invDx;
 }
-*/
 #endif
