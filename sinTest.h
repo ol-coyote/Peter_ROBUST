@@ -35,7 +35,7 @@ void setCOSINE(struct SineInterPolateObj *first, struct SineInterPolateObj *curr
   int i;
   double x = -1.0; // Temporary value of x to run through sine function        
   double incr = (2.0/MAX_ELEM);
-  x+=incr;
+  // x+=incr;
   
   for(i=0;x < 1;i++){
     // Dynamic allocation of each node
