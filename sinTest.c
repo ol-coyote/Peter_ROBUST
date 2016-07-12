@@ -8,6 +8,7 @@
 
 
 int main(void){
+
   int i;
   double sinValues [MAX_ELEM];
   double totalTime;
@@ -18,10 +19,24 @@ int main(void){
   struct timespec start, stop;
 
   clock_gettime(CLOCK_REALTIME, &start);
-  
-  setCOSINE(first, curr, last, sinValues);
+  setSineVal(&first, &curr, &last,sinValues);
   clock_gettime(CLOCK_REALTIME, &stop);
   totalTime = ((stop.tv_sec - start.tv_sec) + (stop.tv_nsec - start.tv_nsec)) / BIL;
+
+
+  if(BT){ // code to iterate and test if linked list is compilated correctly.
+    fprintf(stderr,"IN LINKED LIST\n");
+    i=0;
+    curr = first;
+    
+    while (curr !=NULL){
+      if (BT) fprintf(stderr,"Node value: %f i:%d \n",curr->value, i++);
+      last=curr;
+      curr=curr->next;
+      free(last);
+      if (VERBOSE) fprintf(stderr,"last freed\n");
+    }
+  }
   printf("\n");
   fprintf(stderr, "Start time: %lf\n",start);
   printf("\n");
@@ -29,18 +44,5 @@ int main(void){
   printf("\n");
   fprintf(stderr, "Start time: %lf\n",stop);
   printf("\n");
-
-  if(BT){ // code to iterate and test if linked list is compilated correctly. 
-    i=0;
-    curr = first;
-    while (curr !=NULL){
-      if (BT) fprintf(stderr,"Node value: %f i:%d \n",curr->value, i++);
-      last=curr;
-      curr=curr->next;
-      free(last);
-      if (BT) fprintf(stderr,"last free'd\n");
-    }
-  }
-
   return 0;
 }
