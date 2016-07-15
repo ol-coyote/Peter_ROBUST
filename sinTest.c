@@ -51,7 +51,7 @@ int main(void){
   f=(double *)malloc(sizeof(double *));
   double *df;
   df=(double *)malloc(sizeof(double *));
-  double complete= 0.5;
+  double complete = 5;
   int j;
   
   for(;totalTime < complete ; ){
@@ -61,7 +61,7 @@ int main(void){
     interpolate(test, s, f,df);
     
     clock_gettime(CLOCK_REALTIME, &stop);
-    totalTime += (((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec))) / BIL;
+    totalTime += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL;
     // printf(" TIME: %f\n",totalTime);
   }
    printf(" TIME: %f\n",totalTime);
