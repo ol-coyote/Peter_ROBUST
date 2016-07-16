@@ -23,7 +23,7 @@ int main(void){
  
   setCOSINE(&first, &curr, &last,sinValues,xval);
   
-  if(BT){ // code to iterate and test if linked list is compilated correctly.
+  if(BT1){ // code to iterate and test if linked list is compilated correctly.
     fprintf(stderr,"IN LINKED LIST\n");
     i=0;
     curr = first;
@@ -40,14 +40,13 @@ int main(void){
   test->x0=X_LOW;
   test->invDx=INVDX;
   test->values = &sinValues;
-  if(BT){
+  if(BT1){
     for(i=0;i<MAX_ELEM;i++){
       printf("i: %d ARRAY cos(x*PI): %f\n",i,test->values[i]);
       printf("i: %d ARRAY x*PI: %f\n",i,xval[i]);
-    }
-    fprintf(stderr, "Num of objects:%d\nStarting ordinate range: %f\ninverse table spacing: %f\n",test->n,test->x0, test->invDx); 
+    } 
   }
-  
+  fprintf(stderr, "Num of objects:%d\nStarting ordinate range: %f\ninverse table spacing: %f\n",test->n,test->x0, test->invDx);
 
   double s;
   double *f;
@@ -57,26 +56,25 @@ int main(void){
   double complete = 0.5;
   int j,rVal;
   
-  for(;totalTime < complete ; ){
-    //fprintf(stderr,"j: %d\n",j);
+  for(; totalTime < complete ;){
     clock_gettime(CLOCK_REALTIME, &start);
     s=setRandNum(1,10000);
     rVal=(int)floor(s);
-    if(BT){
-      printf("\n");
-      printf("***** Starting interpolate ******\n");
-      printf("random value generated: %f\n",s);
-      printf("test->table[%d]: %f\nxval: %f\n",rVal,test->values[rVal],xval[rVal] );
-    }
+
+    printf("\n");
+    printf("***** Starting interpolate ******\n");
+    printf("random value generated: %f\n",s);
+    printf("test->table[%d]: %f\nxval: %f\n",rVal,test->values[rVal],xval[rVal] );
     interpolate(test, xval[rVal], f,df);
+    
     printf("~~~~~ Interpolate complete ~~~~~\n");
     printf("\n");
     
     clock_gettime(CLOCK_REALTIME, &stop);
     totalTime += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL;
-    // printf(" TIME: %f\n",totalTime);
   }
-  if(BT){
+  
+  if(BT){ // JUST FOR TIMING PURPOSES
     printf(" TIME: %f\n",totalTime);
     printf("\n");
     fprintf(stderr, "Start time: %lf\n",start);
