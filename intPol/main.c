@@ -11,18 +11,60 @@
 int main(void){
 
   int i;
-  double sinValues [MAX_ELEM];
-  double xval[MAX_ELEM];
+  double graphValues [MAX_ELEM];
+  double *xval;
+  struct Graph_Node *first, *curr, *last;
+  xval = (double *)malloc(MAX_ELEM*sizeof(double*));
   double totalTime=0.0;
   //initialization of struct pointers                                             
-  struct Graph_Node *first = NULL;
-  struct Graph_Node *curr = NULL;
-  struct Graph_Node *last = NULL;
+  first = NULL;
+  curr = NULL;
+  last = NULL;
   struct timespec start, stop;
   struct InterpolationObject *test = (struct InterpolationObject *) malloc (sizeof(struct InterpolationObject *));
   
  
-  setCOS_Val(&first, &curr, &last,sinValues,xval);
+  setCOS_Val(&first, &curr, &last,graphValues,xval);
+
+  test->n=MAX_ELEM;
+  test->x0=X_LOW;
+  test->invDx=INVDX;
+  test->values = &graphValues;
+
+  int rVal;
+  double complete, s;
+  double *df, *f;
+  
+  f=(double *)malloc(sizeof(double *));
+  df=(double *)malloc(sizeof(double *));
+  complete = 0.5; // how long the kernel should run
+  
+  for(; totalTime < complete ;){ // run while totatTime is less than complete time
+
+    s=getRandNum(1,10000); //generate a random number
+    rVal=(int)floor(s); // grab floor value
+    
+    clock_gettime(CLOCK_REALTIME, &start); // start the timer
+    interpolate(test, xval[rVal], f,df);
+    
+    clock_gettime(CLOCK_REALTIME, &stop);
+    totalTime += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL;
+  }
+
+  // free all allocated after program run.
+  //free(graphValues);
+  //free(xval);
+  while (curr !=NULL){
+      last=curr;
+      curr=curr->next;
+      free(last);
+  }
+  return 0;
+}
+
+
+/*
+this code was used to iterate through the linked list, so I removed it to reinstate it later once the array code is working. 
   
   if(BT1){ // code to iterate and test if linked list is compilated correctly.
     fprintf(stderr,"IN LINKED LIST\n");
@@ -37,44 +79,11 @@ int main(void){
       if (VERBOSE) fprintf(stderr,"last freed\n");
     }
   }
-  test->n=MAX_ELEM;
-  test->x0=X_LOW;
-  test->invDx=INVDX;
-  test->values = &sinValues;
-  if(BT1){
-    for(i=0;i<MAX_ELEM;i++){
-      printf("i: %d ARRAY cos(x*PI): %f\n",i,test->values[i]);
-      printf("i: %d ARRAY x*PI: %f\n",i,xval[i]);
-    } 
-  }
-  fprintf(stderr, "Num of objects:%d\nStarting ordinate range: %f\ninverse table spacing: %f\n",test->n,test->x0, test->invDx);
+*/
 
-  double s;
-  double *f;
-  f=(double *)malloc(sizeof(double *));
-  double *df;
-  df=(double *)malloc(sizeof(double *));
-  double complete = 0.5;
-  int j,rVal;
-  
-  for(; totalTime < complete ;){
-    clock_gettime(CLOCK_REALTIME, &start);
-    s=getRandNum(1,10000);
-    rVal=(int)floor(s);
 
-    printf("\n");
-    printf("***** Starting interpolate ******\n");
-    printf("random value generated: %f\n",s);
-    printf("test->table[%d]: %f\nxval: %f\n",rVal,test->values[rVal],xval[rVal] );
-    interpolate(test, xval[rVal], f,df);
-    
-    printf("~~~~~ Interpolate complete ~~~~~\n");
-    printf("\n");
-    
-    clock_gettime(CLOCK_REALTIME, &stop);
-    totalTime += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL;
-  }
-  
+/* The rest of this crap is in random code hell. I just dont want to type this again... So it sits in the 2nd dimension of hell.  Possibly for eternity. 
+
   if(BT){ // JUST FOR TIMING PURPOSES
     printf(" TIME: %f\n",totalTime);
     printf("\n");
@@ -87,5 +96,20 @@ int main(void){
     printf("test\n");
     fprintf(stderr," \n");
   }
-  return 0;
-}
+
+    printf("\n");
+    printf("***** Starting interpolate ******\n");
+    printf("random value generated: %f\n",s);
+    printf("test->table[%d]: %f\nxval: %f\n",rVal,test->values[rVal],xval[rVal] );
+    printf("~~~~~ Interpolate complete ~~~~~\n");
+    printf("\n");
+
+    if(BT1){
+    for(i=0;i<MAX_ELEM;i++){
+      printf("i: %d ARRAY cos(x*PI): %f\n",i,test->values[i]);
+      printf("i: %d ARRAY x*PI: %f\n",i,xval[i]);
+    } 
+  }
+  fprintf(stderr, "Num of objects:%d\nStarting ordinate range: %f\ninverse table spacing: %f\n",test->n,test->x0, test->invDx);
+
+ */
