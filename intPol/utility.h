@@ -1,7 +1,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+extern struct InterpolationObject* table;
+extern struct Graph_Node *first;
 #ifndef UTILITY_H
 #define UTILITY_H
 
@@ -17,8 +18,8 @@
 #define X_HI 1*M_PI
 #define VERBOSE 0
 
-void getCOS_Val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_Node *last, double *sinValues, double *xvals);
-void getSineVal(struct Graph_Node **first, struct Graph_Node *curr, struct Graph_Node *last, double *values);
+void setCOS_Val(void  *f, void *c, void *l, void *v, void *xv);
+void setSineVal(struct Graph_Node **first, struct Graph_Node *curr, struct Graph_Node *last, double *values);
 double getRandNum(double minN, double maxN);
 double getXVal_N(double r);
 

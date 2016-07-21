@@ -3,8 +3,12 @@
 #include "interpolObj.h"
 #include "utility.h"
 
-void setCOS_Val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_Node *last, double *sinValues, double *xvals){
-   
+void setCOS_Val(void *f, void *c, void *l, void *v, void *xv){
+  struct Graph_Node *first = (struct Graph_Node*)f;
+  struct Graph_Node *curr = (struct Graph_Node*)c;
+  struct Graph_Node *last = (struct Graph_Node*)l;
+  double *sinValues = (double *)v;
+  double *xvals = (double *)xv;
   int i;
   double x = -1.0; // Temporary value of x to run through sine function        
   
@@ -28,7 +32,7 @@ void setCOS_Val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_
   }  
 }
 
-void getSineVal(struct Graph_Node **first, struct Graph_Node *curr, struct Graph_Node *last, double *values){
+void getSine_Val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_Node *last, double *values){
   int i;
   double x = -1.0; // Temporary value of x to run through sine function        
 

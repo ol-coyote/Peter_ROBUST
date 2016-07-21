@@ -29,7 +29,7 @@ int main(void){
   test->n=MAX_ELEM;
   test->x0=X_LOW;
   test->invDx=INVDX;
-  test->values = &graphValues;
+  test->values = graphValues;
 
   int rVal;
   double complete, s;
@@ -51,9 +51,7 @@ int main(void){
     totalTime += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL;
   }
 
-  // free all allocated after program run.
-  //free(graphValues);
-  //free(xval);
+  
   while (curr !=NULL){
       last=curr;
       curr=curr->next;

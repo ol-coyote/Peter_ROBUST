@@ -2,9 +2,9 @@
 # Email:  pestrada2@miners.utep.edu                                               
 
 CC=gcc
-OBJ_S=sinTest
-DEPS=sinTest.h
-S_SRC=sinTest.c
+OBJ_S=sinTest 
+DEPS=sinTest.h utility.h
+S_SRC=sinTest.c utility.c
 #CC=gcc
 #OBJ_S=pitest
 #DEPS=sinTest.h

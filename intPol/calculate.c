@@ -5,7 +5,6 @@
 #include "utility.h"
 
 
-
 /// Interpolate a table to determine f(r) and its derivative f'(r).
 ///
 /// The forces on the particle are much more sensitive to the derivative
