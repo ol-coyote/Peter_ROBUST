@@ -43,6 +43,11 @@ int main(int argc, char **argv){
   test->invDx=INVDX;
   test->values = graph_values;
 
+  /* Prototype code */
+  g_test->n=MAX_ELEM;
+  g_test->x0=X_LOW;
+  g_test->invDx=INVDX;
+  g_test->values = g_unit;
   /* 
      FYI: The timer is off right now. I dont have an exact value, but at 25s it took approximately 28s to complete. I think I have a way to fix/test it, but I'd much rather eat tacos right now. 
    */
@@ -56,7 +61,7 @@ int main(int argc, char **argv){
     rVal=(int)floor(s); // grab floor value of random number
     
     interpolate(test, x_val[rVal], f,df); // run calculation
-    
+        
     free(f); // free function result pointer
     free(df);// free derv. function result pointer
 
