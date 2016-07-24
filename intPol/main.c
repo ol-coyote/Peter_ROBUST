@@ -61,7 +61,8 @@ int main(int argc, char **argv){
     rVal=(int)floor(s); // grab floor value of random number
     
     interpolate(test, x_val[rVal], f,df); // run calculation
-        
+    interpolate_proto(g_test, x_val[rVal], f,df); /* Prototype code */
+    
     free(f); // free function result pointer
     free(df);// free derv. function result pointer
 
@@ -80,7 +81,9 @@ int main(int argc, char **argv){
   free(first);
   free(current);
   free(g_unit);
-  //free(test);
+  free(g_test);
+  free(test);
+
   return 0;
 }
 
