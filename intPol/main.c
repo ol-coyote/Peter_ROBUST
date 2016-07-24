@@ -16,17 +16,18 @@ int main(int argc, char **argv){
   double graphValues[MAX_ELEM];
   double xval[MAX_ELEM];
   struct InterpolationObject *test;
-  struct Graph_Node *first, *curr, *last;
+  struct Graph_Node *first, *curr, *last, *gUnit;
   struct timespec start, stop;
 
   count = 0; //used to count how many times calculation ran
   complete = (argc > 1)? atof(argv[1]) : 0.5; // used to compute how long the kernel should run
   totalTime=0.0; // used to hold value of current runtime
-  test = (struct InterpolationObject *) malloc (sizeof(struct InterpolationObject *));
+  gUnit = (struct Graph_Node *)malloc(MAX_ELEM * sizeof(struct Graph_Node));
+  test = (struct InterpolationObject *) malloc (sizeof(struct InterpolationObject ));
   first = NULL;
   curr = NULL;
   last = NULL;
-   
+  setCOS_Val_proto(&first,&curr, &last, gUnit);
   setCOS_Val(&first, &curr, &last,graphValues,xval); // setting up table and nodes with values
 
   // Initializing InterpolObj struct
@@ -57,12 +58,17 @@ int main(int argc, char **argv){
     
   }
   printf("Calculations ran: %d times for at %f seconds\n",count,totalTime);
-  // free linked list
+
+  // free pointers
   while (curr !=NULL){
       last=curr;
       curr=curr->next;
       free(last);
   }
+  free(first);
+  free(curr);
+  free(gUnit);
+  //free(test);
   return 0;
 }
 
