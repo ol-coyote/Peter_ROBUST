@@ -1,8 +1,16 @@
+/*
+  
+  author: Peter Estrada 
+  email: pestrada2@miners.utep.edu
+
+*/
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 extern struct InterpolationObject* table;
 extern struct Graph_Node *first;
+
 #ifndef UTILITY_H
 #define UTILITY_H
 
@@ -19,7 +27,7 @@ extern struct Graph_Node *first;
 #define VERBOSE 0
 
 void setCOS_Val(void  *f, void *c, void *l, void *v, void *xv);
-void setCOS_Val_proto(void *fir, void *cur, void *las, void *graph_v);
+void setCOS_Val_proto(void *fir, void *cur, void *las, void *graph_v); /* Prototype code */
 void setSineVal(struct Graph_Node **first, struct Graph_Node *curr, struct Graph_Node *last, double *values);
 double getRandNum(double minN, double maxN);
 double getXVal_N(double r);

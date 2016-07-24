@@ -1,5 +1,13 @@
+/*
+  
+  author: Peter Estrada 
+  email: pestrada2@miners.utep.edu
+
+*/
+
 #ifndef INTERPOLOBJ_H
-/* Node for sin table linked list. */
+
+/* Node for storing graph values. */
 struct Graph_Node{
   double value;
   double x;
@@ -22,5 +30,14 @@ struct InterpolationObject{
    double invDx;   //!< the inverse of the table spacing                        
    double *values; //!< the abscissa values values=               
 };
+
+/* Prototype code */
+struct InterpolationObjectProto{
+   int n;          //!< the number of values in the table                       
+   double x0;      //!< the starting ordinate range                             
+   double invDx;   //!< the inverse of the table spacing                        
+   struct Graph_Node *values; //!< the abscissa values values=               
+};
+
 
 #endif

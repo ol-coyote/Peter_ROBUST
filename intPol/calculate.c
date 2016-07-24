@@ -1,8 +1,42 @@
+/*
+  
+  author: Peter Estrada 
+  email: pestrada2@miners.utep.edu
+
+*/
+
 #include <math.h>
 #include <stdlib.h>
 
 #include "interpolObj.h"
 #include "utility.h"
+
+/* Prototype code */
+void interpolate_proto(struct InterpolationObjectProto* test, double r, double* f, double* df) {
+  //const double* tt = test->values; // alias
+   const struct Graph_Node* tt = test->values; // alias
+
+   if ( r < test->x0 ){ r = test->x0;}
+
+   r = (r-test->x0)*(test->invDx);
+   
+   int ii;
+   ii = (int)floor((int)r);
+
+   if (ii > test->n) {
+     ii = test->n;
+     r = test->n / test->invDx;
+   }
+   
+   r = r - floor(r); // reset r to fractional distance
+
+   double g1 = tt[ii+1].value - tt[ii-1].value;
+   double g2 = tt[ii+2].value - tt[ii].value;
+
+   *f = tt[ii].value + 0.5*r*(g1 + r*(tt[ii+1].value + tt[ii-1].value - 2.0*tt[ii].value) );
+   *df = 0.5*(g1 + r*(g2-g1))*test->invDx;
+
+}
 
 
 /// Interpolate a table to determine f(r) and its derivative f'(r).
