@@ -18,16 +18,19 @@
 int main(int argc, char **argv){
 
   int count, i, rVal;
-  double complete, s, total_time;
+  int *test_values; // used to temporarly store random values for computations
+  double run_time, s, total_time;
   double *df, *f;
   double graph_values[MAX_ELEM], x_val[MAX_ELEM];
   struct InterpolationObject *test;
   struct InterpolationObjectProto *g_test; /* Prototype code */
   struct Graph_Node *first, *current, *last, *g_unit;
   struct timespec start, stop;
-
+  
   count = 0; //used to count how many times calculation ran
-  complete = (argc > 1)? atof(argv[1]) : 0.5; // used to compute how long the kernel should run
+  run_time = (argc > START)? atof(argv[1]) : HALF_SEC; // used to compute how long the kernel should run
+  i=0;
+  test_values=(int *)malloc(MAX_ELEM*sizeof(int));
   total_time=0.0; // used to hold value of current runtime
   g_unit = (struct Graph_Node *)malloc(MAX_ELEM * sizeof(struct Graph_Node)); /* Prototype code */
   g_test = (struct InterpolationObjectProto *) malloc (sizeof(struct InterpolationObjectProto ));
@@ -40,37 +43,41 @@ int main(int argc, char **argv){
   // Initializing InterpolObj struct
   test->n=MAX_ELEM;
   test->x0=X_LOW;
-  test->invDx=INVDX;
+  test->invDx=INV_DX;
   test->values = graph_values;
 
   /* Prototype code */
   g_test->n=MAX_ELEM;
   g_test->x0=X_LOW;
-  g_test->invDx=INVDX;
+  g_test->invDx=INV_DX;
   g_test->values = g_unit;
   /* 
      FYI: The timer is off right now. I dont have an exact value, but at 25s it took approximately 28s to complete. I think I have a way to fix/test it, but I'd much rather eat tacos right now. 
    */
-  for(; total_time < complete; count++){ // run while totatTime is less than complete time
+  while(i++ < MAX_ELEM) test_values[i] = (int) floor (getRandNum(START, MAX_ELEM)); // generate random values for computation purposes
+
+  for(; total_time < run_time; count++){ // run while totatTime is less than run_time time
+
+    i=0;
+    
+    f=(double *) malloc (sizeof(double ));
+    df=(double *) malloc (sizeof(double ));
+
     clock_gettime(CLOCK_REALTIME, &start); // start the timer
     
-    f=(double *) malloc (sizeof(double *));
-    df=(double *) malloc (sizeof(double *));
-    
-    s=getRandNum(1,10000); //generate a random number
-    rVal=(int)floor(s); // grab floor value of random number
-    
-    interpolate(test, x_val[rVal], f,df); // run calculation
-    interpolate_proto(g_test, x_val[rVal], f,df); /* Prototype code */
-    
-    free(f); // free function result pointer
-    free(df);// free derv. function result pointer
 
+    while(i++ < MAX_ELEM){
+      interpolate(test, x_val[test_values[i]], f,df); // run calculation
+      interpolate_proto(g_test, x_val[test_values[i]], f,df); /* Prototype code */
+    }
+    
     clock_gettime(CLOCK_REALTIME, &stop);// stop the timer.
     total_time += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL; // calculate current runtime
-    
+
+    free(f); // free function result pointer
+    free(df);// free derv. function result pointer
   }
-  printf("Calculations ran: %d times for at %f seconds\n", count, total_time);
+  printf("Calculations ran: %d times for at %f seconds\n", count*MAX_ELEM, total_time);
 
   // free pointers
   while (current !=NULL){
@@ -83,7 +90,8 @@ int main(int argc, char **argv){
   free(g_unit);
   free(g_test);
   free(test);
-
+  free(test_values);
+  /* Repeat after me: I AM FREE! */
   return 0;
 }
 

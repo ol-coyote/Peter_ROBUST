@@ -15,12 +15,12 @@ extern struct Graph_Node *first;
 #define UTILITY_H
 
 #define BIL 1E9
-#define BT 0
-#define BT1 0
+#define HALF_SEC 0.5
 #define INCR (RANGE/MAX_ELEM)
-#define INVDX (1/(INCR*M_PI))
+#define INV_DX (1/(INCR*M_PI))
 #define MAX_ELEM 10000
 #define RANGE 2.0
+#define START 1
 #define X_DIST 0.036
 #define X_LOW -1*M_PI
 #define X_HI 1*M_PI
