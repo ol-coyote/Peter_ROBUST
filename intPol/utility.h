@@ -26,10 +26,10 @@ extern struct Graph_Node *first;
 #define X_HI 1*M_PI
 #define VERBOSE 0
 
-void setCOS_Val(void  *f, void *c, void *l, void *v, void *xv);
-void setCOS_Val_proto(void *fir, void *cur, void *las, void *graph_v); /* Prototype code */
-void setSineVal(struct Graph_Node **first, struct Graph_Node *curr, struct Graph_Node *last, double *values);
-double getRandNum(double min_num, double max_num);
+void set_cos_val_proto(void *fir, void *cur, void *las, void *graph_v); /* Prototype code */
+void set_cos_val(void  *f, void *c, void *l, void *v, void *xv);
+void get_sin_val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_Node *last, double *values);
+double get_rand_num(double min_num, double max_num);
 double get_x_val_n(double entry);
 
 #endif

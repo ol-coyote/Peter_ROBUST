@@ -12,7 +12,7 @@
 #include "utility.h"
 
 /* Prototype code */
-void setCOS_Val_proto(void *fir, void *cur, void *las, void *graph_v){
+void set_cos_val_proto(void *fir, void *cur, void *las, void *graph_v){
   struct Graph_Node *first = (struct Graph_Node*)fir;
   struct Graph_Node *current = (struct Graph_Node*)cur;
   struct Graph_Node *last = (struct Graph_Node*)las;
@@ -42,7 +42,7 @@ void setCOS_Val_proto(void *fir, void *cur, void *las, void *graph_v){
   }  
 }
 
-void setCOS_Val(void *f, void *c, void *l, void *v, void *xv){
+void set_cos_val(void *f, void *c, void *l, void *v, void *xv){
   struct Graph_Node *first = (struct Graph_Node*)f;
   struct Graph_Node *current = (struct Graph_Node*)c;
   struct Graph_Node *last = (struct Graph_Node*)l;
@@ -71,7 +71,7 @@ void setCOS_Val(void *f, void *c, void *l, void *v, void *xv){
   }  
 }
 
-void getSine_Val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_Node *last, double *values){
+void get_sin_val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_Node *last, double *values){
   int i;
   double x = -1.0; // Temporary value of x to run through sine function        
 
@@ -96,7 +96,7 @@ void getSine_Val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph
 }
 
 
-double getRandNum(double min_num, double max_num){ return (double) rand()/RAND_MAX * (max_num - min_num) + min_num; }
-double get_x_val_number(double entry){ return (double)(entry*((2*M_PI)/MAX_ELEM)-M_PI); }
+double get_rand_num(double min_num, double max_num){ return (double) rand()/RAND_MAX * (max_num - min_num) + min_num; }
+double get_x_val_number(double entry){ return (double)(entry*((2*M_PI)/MAX_ELEM)-M_PI); } /* Function that returns the x coordinate to check accuracy of cosine table */
 
 

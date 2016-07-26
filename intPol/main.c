@@ -37,8 +37,8 @@ int main(int argc, char **argv){
   test = (struct Interpolation_Object *) malloc (sizeof(struct Interpolation_Object ));
   first = NULL, current = NULL, last = NULL;
   
-  setCOS_Val_proto(&first,&current, &last, g_unit); /* Prototype code */
-  setCOS_Val(&first, &current, &last,graph_values,x_val); // setting up table and nodes with values
+  set_cos_val_proto(&first,&current, &last, g_unit); /* Prototype code */
+  set_cos_val(&first, &current, &last,graph_values,x_val); // setting up table and nodes with values
 
   // Initializing InterpolObj struct
   test->n=MAX_ELEM;
@@ -54,14 +54,14 @@ int main(int argc, char **argv){
   /* 
      FYI: The timer is off right now. I dont have an exact value, but at 25s it took approximately 28s to complete. I think I have a way to fix/test it, but I'd much rather eat tacos right now. 
    */
-  while(i++ < MAX_ELEM) test_values[i] = (int) floor (getRandNum(START, MAX_ELEM)); // generate random values for computation purposes
+  while(i++ < MAX_ELEM) test_values[i] = (int) floor (get_rand_num(START, MAX_ELEM)); // generate random values for computation purposes
 
   for(; total_time < run_time; count++){ // run while totatTime is less than run_time time
 
     i=0;
     
-    f=(double *) malloc (sizeof(double ));
-    df=(double *) malloc (sizeof(double ));
+    f = (double *) malloc (sizeof(double ));
+    df = (double *) malloc (sizeof(double ));
 
     clock_gettime(CLOCK_REALTIME, &start); // start the timer
     
@@ -81,9 +81,9 @@ int main(int argc, char **argv){
   printf("Calculations ran: %d times for at %f seconds\n", count*MAX_ELEM, total_time);
 
   /* Repeat after me: I AM FREE! */
-  while (current !=NULL){
-      last=current;
-      current=current->next;
+  while (current != NULL){
+      last = current;
+      current = current->next;
       free(last);
   }
   free(first);
