@@ -17,7 +17,7 @@
 
 int main(int argc, char **argv){
 
-  int count, i, rVal;
+  int count, i, j, rVal;
   int *test_values; // used to temporarly store random values for computations
   double run_time, s, total_time;
   double *df, *f;
@@ -60,15 +60,16 @@ int main(int argc, char **argv){
 
   for(; total_time < run_time; count++){ // run while totatTime is less than run_time time
 
-    i=0;
-    
-    f = (double *) malloc (sizeof(double ));
-    df = (double *) malloc (sizeof(double ));
+    i = 0, j = 0;
+    f = (double *) malloc (sizeof(double));
+    df = (double *) malloc (sizeof(double));
 
     clock_gettime(CLOCK_REALTIME, &start); // start the timer
     
     while(i++ < MAX_ELEM){
       interpolate(test, x_val[test_values[i]], f, df); // run calculation
+    }
+    while(j++ < MAX_ELEM){
       interpolate_proto(g_test, x_val[test_values[i]], f, df); /* Prototype code */
     }
     
@@ -80,7 +81,7 @@ int main(int argc, char **argv){
 
   }
 
-  printf("Calculations ran: %d times for at %f seconds\n", count*MAX_ELEM, total_time);
+  printf("Calculations ran: %d times for at %f seconds\n", count*(2*MAX_ELEM), total_time);
 
   /* Repeat after me: I AM FREE! */
   while (current != NULL){
