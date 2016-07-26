@@ -37,8 +37,10 @@ int main(int argc, char **argv){
   test = (struct Interpolation_Object *) malloc (sizeof(struct Interpolation_Object ));
   first = NULL, current = NULL, last = NULL;
   
-  set_cos_val_proto(&first,&current, &last, g_unit); /* Prototype code */
-  set_cos_val(&first, &current, &last,graph_values,x_val); // setting up table and nodes with values
+   
+  set_array_cos_val(graph_values,x_val);
+  set_link_list_cos_val(&first, &current, &last);
+  set_st_array_cos_val(g_unit);
 
   // Initializing InterpolObj struct
   test->n=MAX_ELEM;
