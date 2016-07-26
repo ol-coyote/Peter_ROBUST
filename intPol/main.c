@@ -69,6 +69,12 @@ int main(int argc, char **argv){
     while(i++ < MAX_ELEM){
       interpolate(test, x_val[test_values[i]], f, df); // run calculation
     }
+
+    clock_gettime(CLOCK_REALTIME, &stop);// stop the timer.
+    total_time += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL; // calculate current runtime
+
+    clock_gettime(CLOCK_REALTIME, &start); // start the timer
+    
     while(j++ < MAX_ELEM){
       interpolate_proto(g_test, x_val[test_values[i]], f, df); /* Prototype code */
     }
