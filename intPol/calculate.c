@@ -12,7 +12,7 @@
 #include "utility.h"
 
 /* Prototype code */
-void interpolate_proto(struct InterpolationObjectProto* test, double r, double* f, double* df) {
+void interpolate_proto(struct Interpolation_Object_Proto* test, double r, double* f, double* df) {
   //const double* tt = test->values; // alias
    const struct Graph_Node* tt = test->values; // alias
 
@@ -61,7 +61,7 @@ void interpolate_proto(struct InterpolationObjectProto* test, double r, double* 
 /// \param [out] f The interpolated value of f(r).
 /// \param [out] df The interpolated value of df(r)/dr.
 
-void interpolate(struct InterpolationObject* table, double r, double* f, double* df) {
+void interpolate(struct Interpolation_Object* table, double r, double* f, double* df) {
    const double* tt = table->values; // alias
 
    if ( r < table->x0 ){ r = table->x0;}

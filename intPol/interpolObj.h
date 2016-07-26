@@ -24,7 +24,7 @@ param [in] x0   minimum ordinate value of the table.
 param [in] dx   spacing of the ordinate values. {1.0/dx};
 param [in] data abscissa values.  An array of size n. 
 */
-struct InterpolationObject{
+struct Interpolation_Object{
    int n;          //!< the number of values in the table                       
    double x0;      //!< the starting ordinate range                             
    double invDx;   //!< the inverse of the table spacing                        
@@ -32,7 +32,7 @@ struct InterpolationObject{
 };
 
 /* Prototype code */
-struct InterpolationObjectProto{
+struct Interpolation_Object_Proto{
    int n;          //!< the number of values in the table                       
    double x0;      //!< the starting ordinate range                             
    double invDx;   //!< the inverse of the table spacing                        

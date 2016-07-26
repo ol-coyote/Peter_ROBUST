@@ -22,8 +22,8 @@ int main(int argc, char **argv){
   double run_time, s, total_time;
   double *df, *f;
   double graph_values[MAX_ELEM], x_val[MAX_ELEM];
-  struct InterpolationObject *test;
-  struct InterpolationObjectProto *g_test; /* Prototype code */
+  struct Interpolation_Object *test;
+  struct Interpolation_Object_Proto *g_test; /* Prototype code */
   struct Graph_Node *first, *current, *last, *g_unit;
   struct timespec start, stop;
   
@@ -33,8 +33,8 @@ int main(int argc, char **argv){
   test_values=(int *)malloc(MAX_ELEM*sizeof(int));
   total_time=0.0; // used to hold value of current runtime
   g_unit = (struct Graph_Node *)malloc(MAX_ELEM * sizeof(struct Graph_Node)); /* Prototype code */
-  g_test = (struct InterpolationObjectProto *) malloc (sizeof(struct InterpolationObjectProto ));
-  test = (struct InterpolationObject *) malloc (sizeof(struct InterpolationObject ));
+  g_test = (struct Interpolation_Object_Proto *) malloc (sizeof(struct Interpolation_Object_Proto ));
+  test = (struct Interpolation_Object *) malloc (sizeof(struct Interpolation_Object ));
   first = NULL, current = NULL, last = NULL;
   
   setCOS_Val_proto(&first,&current, &last, g_unit); /* Prototype code */
@@ -65,21 +65,22 @@ int main(int argc, char **argv){
 
     clock_gettime(CLOCK_REALTIME, &start); // start the timer
     
-
     while(i++ < MAX_ELEM){
-      interpolate(test, x_val[test_values[i]], f,df); // run calculation
-      interpolate_proto(g_test, x_val[test_values[i]], f,df); /* Prototype code */
+      interpolate(test, x_val[test_values[i]], f, df); // run calculation
+      interpolate_proto(g_test, x_val[test_values[i]], f, df); /* Prototype code */
     }
     
     clock_gettime(CLOCK_REALTIME, &stop);// stop the timer.
     total_time += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL; // calculate current runtime
 
     free(f); // free function result pointer
-    free(df);// free derv. function result pointer
+    free(df);// free derivative function result pointer
+
   }
+
   printf("Calculations ran: %d times for at %f seconds\n", count*MAX_ELEM, total_time);
 
-  // free pointers
+  /* Repeat after me: I AM FREE! */
   while (current !=NULL){
       last=current;
       current=current->next;
@@ -91,7 +92,7 @@ int main(int argc, char **argv){
   free(g_test);
   free(test);
   free(test_values);
-  /* Repeat after me: I AM FREE! */
+ 
   return 0;
 }
 

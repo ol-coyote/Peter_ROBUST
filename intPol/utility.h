@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern struct InterpolationObject* table;
+extern struct Interpolation_Object* table;
 extern struct Graph_Node *first;
 
 #ifndef UTILITY_H
@@ -29,7 +29,7 @@ extern struct Graph_Node *first;
 void setCOS_Val(void  *f, void *c, void *l, void *v, void *xv);
 void setCOS_Val_proto(void *fir, void *cur, void *las, void *graph_v); /* Prototype code */
 void setSineVal(struct Graph_Node **first, struct Graph_Node *curr, struct Graph_Node *last, double *values);
-double getRandNum(double minN, double maxN);
-double getXVal_N(double r);
+double getRandNum(double min_num, double max_num);
+double get_x_val_n(double entry);
 
 #endif

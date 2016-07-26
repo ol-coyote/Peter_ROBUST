@@ -96,7 +96,7 @@ void getSine_Val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph
 }
 
 
-double getRandNum(double minN, double maxN){ return (double) rand()/RAND_MAX * (maxN - minN) + minN; }
-double getXVal_N(double r){ return (double)(r*((2*M_PI)/MAX_ELEM)-M_PI); }
+double getRandNum(double min_num, double max_num){ return (double) rand()/RAND_MAX * (max_num - min_num) + min_num; }
+double get_x_val_number(double entry){ return (double)(entry*((2*M_PI)/MAX_ELEM)-M_PI); }
 
 
