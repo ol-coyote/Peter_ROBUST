@@ -29,8 +29,10 @@ extern struct Graph_Node *first;
 
 void set_array_cos_val(void *v, void *xv);
 void set_link_list_cos_val(void *f, void *c, void *l);/* Prototype code */
-void set_st_array_cos_val(void *graph_v); 
-void get_sin_val(struct Graph_Node *first, struct Graph_Node *curr, struct Graph_Node *last, double *values);
+void set_st_array_cos_val(void *graph_v);
+void set_array_sin_val(void *v, void *xv);
+void set_link_list_sin_val(void *f, void *c, void *l);/* Prototype code */
+void set_st_array_sin_val(void *graph_v); 
 double get_rand_num(double min_num, double max_num);
 double get_x_val_n(double entry);
 
