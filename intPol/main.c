@@ -24,7 +24,10 @@ int main(int argc, char **argv){
   double graph_values[MAX_ELEM], x_val[MAX_ELEM];
   struct Interpolation_Object *test;
   struct Interpolation_Object_Proto *g_test; /* Prototype code */
-  struct Graph_Node *first, *current, *last, *g_unit;
+  struct Graph_Node *first=NULL;
+  struct Graph_Node  *current =NULL;
+  struct Graph_Node  *last =NULL;
+  struct Graph_Node  *g_unit=NULL;
   struct timespec start, stop;
   
   count = 0; //used to count how many times calculation ran
@@ -36,72 +39,38 @@ int main(int argc, char **argv){
   g_test = (struct Interpolation_Object_Proto *) malloc (sizeof(struct Interpolation_Object_Proto ));
   test = (struct Interpolation_Object *) malloc (sizeof(struct Interpolation_Object ));
   first = NULL, current = NULL, last = NULL;
+
   
-   
-  set_array_cos_val(graph_values,x_val);
-  set_link_list_cos_val(&first, &current, &last);
-  set_st_array_cos_val(g_unit);
+  double temp, x;
+  x = -1.0; // Temporary value of x to run through sine function        
+  
+  for(;x < 1;){
 
-  // Initializing InterpolObj struct
-  test->n=MAX_ELEM;
-  test->x0=X_LOW;
-  test->invDx=INV_DX;
-  test->values = graph_values;
+    temp = x * M_PI; // assigning x * PI value
 
-  /* Prototype code */
-  g_test->n=MAX_ELEM;
-  g_test->x0=X_LOW;
-  g_test->invDx=INV_DX;
-  g_test->values = g_unit;
-  /* 
-     FYI: The timer is off right now. I dont have an exact value, but at 25s it took approximately 28s to complete. I think I have a way to fix/test it, but I'd much rather eat tacos right now. 
-   */
-  while(i++ < MAX_ELEM) test_values[i] = (int) floor (get_rand_num(START, MAX_ELEM)); // generate random values for computation purposes
-
-  for(; total_time < run_time; count++){ // run while totatTime is less than run_time time
-
-    i = 0, j = 0;
-    f = (double *) malloc (sizeof(double));
-    df = (double *) malloc (sizeof(double));
-
-    clock_gettime(CLOCK_REALTIME, &start); // start the timer
+    // Dynamic allocation of each node
+    current = (struct Graph_Node *) malloc(sizeof(struct Graph_Node));
     
-    while(i++ < MAX_ELEM){
-      interpolate(test, x_val[test_values[i]], f, df); // run calculation
-    }
-
-    clock_gettime(CLOCK_REALTIME, &stop);// stop the timer.
-    total_time += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL; // calculate current runtime
-
-    clock_gettime(CLOCK_REALTIME, &start); // start the timer
+    if (first == NULL)
+      first = current;
+    if (last != NULL)
+      last->next = current;
     
-    while(j++ < MAX_ELEM){
-      interpolate_proto(g_test, x_val[test_values[i]], f, df); /* Prototype code */
-    }
+    current->value = cos(temp); // insert sin value into node for linked lis
+    current->x = temp;
     
-    clock_gettime(CLOCK_REALTIME, &stop);// stop the timer.
-    total_time += ((double)(stop.tv_sec - start.tv_sec)) + ((double)(stop.tv_nsec - start.tv_nsec)) / BIL; // calculate current runtime
-
-    free(f); // free function result pointer
-    free(df);// free derivative function result pointer
-
-  }
-
-  printf("Calculations ran: %d times for at %f seconds\n", count*(2*MAX_ELEM), total_time);
-
-  /* Repeat after me: I AM FREE! */
+    current->next = NULL; // set next to null
+    last=current; // set last to current
+    
+    x+=0.0002; // increment value of x
+  }  
   while (current != NULL){
-      last = current;
-      current = current->next;
-      free(last);
+    printf("current->x: %f current->values: %f\n",current->x,current->value);
+    last = current;
+    current =current->next;
+    free(last);
   }
-  free(first);
-  free(current);
-  free(g_unit);
-  free(g_test);
-  free(test);
-  free(test_values);
- 
   return 0;
 }
+
 

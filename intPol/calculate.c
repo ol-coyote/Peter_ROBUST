@@ -11,6 +11,22 @@
 #include "interpolObj.h"
 #include "utility.h"
 
+void interpolate(struct Interpolation_Object* table, double r, double* f, double* df);
+/* tighe prototype code */
+void compare(struct Graph_Node *head){
+
+  double rel_sine_err = 0.0, rel_cos_err = 0.0;
+  double abs_cos_err = 0.0, abs_sine_err = 0.0;
+  double angle = 0.0, interpol_cos = 0.0, interpol_sine = 0.0;
+
+  for(struct Graph_Node *temp = head; ; temp=temp->next){
+    angle = temp->x;
+    rel_cos_err = cos(angle); // these values are already generated
+    rel_sine_err = sin(angle); // these values are already generated shouldn't PI be part of the sine and cos functions?
+    // interpolate(table, angle, &interpol_cos, &interpol_sine); //where is table passed as an argument?
+    abs_cos_err = max(abs_cos_err,abs(interpol_cos - rel_cos_err));
+  }
+}
 /* Prototype code */
 void interpolate_proto(struct Interpolation_Object_Proto* test, double r, double* f, double* df) {
   //const double* tt = test->values; // alias

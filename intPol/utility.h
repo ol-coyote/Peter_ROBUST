@@ -26,6 +26,8 @@ extern struct Graph_Node *first;
 #define X_HI 1*M_PI
 #define VERBOSE 0
 
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
 
 void set_array_cos_val(void *v, void *xv);
 void set_link_list_cos_val(void *f, void *c, void *l);/* Prototype code */
